@@ -5,7 +5,7 @@ const openStream = require('./openStream');
 
 openStream(function(stream){
 	playVideo(stream, 'localStream')
-	const p = new Peer({ initiator: location.hash === '#1', trickle: false, stream });
+	const p = new Peer({ initiator: location.hash === '#1', trickle: false, stream: stream });
 
 	p.on('signal', token => {
 		$('#txtSignal').val(JSON.stringify(token)); 		// sinh ra offer token
@@ -20,5 +20,5 @@ openStream(function(stream){
 		p.signal(friendSignal);			// sinh ra answers token  --> connected!!
 	});
 
-	p.on('stream', friendStream => playVideo(stream, 'friendStream'));
+	p.on('stream', friendStream => playVideo(friendStream, 'friendStream'));
 });
